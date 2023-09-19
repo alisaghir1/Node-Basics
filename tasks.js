@@ -33,6 +33,7 @@ function startApp(name){
  * @param  {string} text data typed by the user
  * @returns {void}
  */
+const tasks = [];
 function onDataReceived(text) {
 
   if (text === 'quit\n' || text === 'exit') {
@@ -47,6 +48,9 @@ function onDataReceived(text) {
   }
   else if(text === 'help\n'){     //if text is help just return the help commands to list the possible commands
     help();
+  }
+  else if (text === 'list\n') {
+    listTasks();
   }
   else{
     unknownCommand(text);
@@ -90,6 +94,22 @@ function hello(name){
 function quit(){
   console.log('You lost a good guy, bye bye')
   process.exit();
+}
+
+/**
+ * Lists all the tasks
+ *
+ * @returns {void}
+*/
+function listTasks() {     //this function simply if tasks.length is 0 just print no tasks else i used for each as we used today in the weather api solution to increase the index of each task and display it
+  if (tasks.length === 0) {
+    console.log('No tasks to display.');
+  } else {
+    console.log('Tasks:');
+    tasks.forEach((task, index) => {
+      console.log(`${index + 1}. ${task}`);
+    });
+  }
 }
 
 // The following line starts the application
