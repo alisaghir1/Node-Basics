@@ -54,7 +54,7 @@ function onDataReceived(text) {
 }
 
 function help(){
-  console.log('these are the commands: \n hello\n quit\n exit\n help\n')  // this fucntion lists all the commands
+  console.log('these are the commands: \n hello\n hello + your text \n quit\n exit\n help\n')  // this fucntion lists all the commands
 }
 /**
  * prints "unknown command"
