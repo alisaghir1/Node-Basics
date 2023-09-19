@@ -33,9 +33,8 @@ function startApp(name){
  * @param  {string} text data typed by the user
  * @returns {void}
  */
-const tasks = [];
 function onDataReceived(text) {
-
+  
   if (text === 'quit\n' || text === 'exit') {
     quit();
   }
@@ -52,6 +51,12 @@ function onDataReceived(text) {
   else if (text === 'list\n') {
     listTasks();
   }
+  else if (text.startsWith('add ')) {
+    const taskToAdd = text.trim().substring(4); // Extract the argument after "add"
+    addTask(taskToAdd);
+}
+  else if (text.trim() === 'add')      //as i did in the hello i just copied and edited them
+    addTask();
   else{
     unknownCommand(text);
   }
@@ -63,10 +68,10 @@ function help(){
 /**
  * prints "unknown command"
  * This function is supposed to run when all other commands have failed
- *
- * @param  {string} c the text received
- * @returns {void}
- */
+*
+* @param  {string} c the text received
+* @returns {void}
+*/
 function unknownCommand(c){
   console.log('You dont Have any knowledge? just see the instructions by typing: help')
 }
@@ -74,8 +79,8 @@ function unknownCommand(c){
 
 /**
  * Says hello
- *
- * @returns {void}
+*
+* @returns {void}
 */
 function hello(name){
   if (name) {
@@ -88,9 +93,9 @@ function hello(name){
 
 /**
  * Exits the application
- *
- * @returns {void}
- */
+*
+* @returns {void}
+*/
 function quit(){
   console.log('You lost a good guy, bye bye')
   process.exit();
@@ -98,8 +103,8 @@ function quit(){
 
 /**
  * Lists all the tasks
- *
- * @returns {void}
+*
+* @returns {void}
 */
 function listTasks() {     //this function simply if tasks.length is 0 just print no tasks else i used for each as we used today in the weather api solution to increase the index of each task and display it
   if (tasks.length === 0) {
@@ -109,6 +114,22 @@ function listTasks() {     //this function simply if tasks.length is 0 just prin
     tasks.forEach((task, index) => {
       console.log(`${index + 1}. ${task}`);
     });
+  }
+}
+const tasks = [];
+
+/**
+ * Lists all the tasks
+*
+* @returns {void}
+*/
+
+function addTask(task) {                      //similar to the hello fucntion above i just changed the names
+  if (task) {
+    tasks.push(task);
+    console.log(`Task "${task}" has been added.`);
+  } else {
+    console.log('Undefined: Please provide a task to add.');
   }
 }
 
