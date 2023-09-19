@@ -6,14 +6,14 @@
  * It prints a welcome line, and then a line with "----",
  * then nothing.
  *  
- * @param  {string} name the name of the app
+ * @param  {string} name alisaghir name
  * @returns {void}
  */
 function startApp(name){
   process.stdin.resume();
   process.stdin.setEncoding('utf8');
   process.stdin.on('data', onDataReceived);
-  console.log(`Welcome to ${name}'s application!`)
+  console.log(`Welcome to ${name}'s coding place!`)
   console.log("--------------------")
 }
 
@@ -34,18 +34,23 @@ function startApp(name){
  * @returns {void}
  */
 function onDataReceived(text) {
-  if (text === 'quit\n') {
+  if (text === 'quit\n' || text === 'exit') {
     quit();
   }
   else if(text === 'hello\n'){
     hello();
+  }
+  else if(text === 'help\n'){     //if text is help just return the help commands to list the possible commands
+    help();
   }
   else{
     unknownCommand(text);
   }
 }
 
-
+function help(){
+  console.log('these are the commands: \n hello\n quit\n exit\n help\n')  // this fucntion lists all the commands
+}
 /**
  * prints "unknown command"
  * This function is supposed to run when all other commands have failed
@@ -54,7 +59,7 @@ function onDataReceived(text) {
  * @returns {void}
  */
 function unknownCommand(c){
-  console.log('unknown command: "'+c.trim()+'"')
+  console.log('You dont Have any knowledge? just see the instructions by typing: help')
 }
 
 
@@ -64,7 +69,7 @@ function unknownCommand(c){
  * @returns {void}
  */
 function hello(){
-  console.log('hello!')
+  console.log('welcome to my coding place')
 }
 
 
@@ -74,9 +79,9 @@ function hello(){
  * @returns {void}
  */
 function quit(){
-  console.log('Quitting now, goodbye!')
+  console.log('You lost a good guy, bye bye')
   process.exit();
 }
 
 // The following line starts the application
-startApp("Jad Sarout")
+startApp("ali saghir")
