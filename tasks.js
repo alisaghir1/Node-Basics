@@ -55,8 +55,16 @@ function onDataReceived(text) {
     const taskToAdd = text.trim().substring(4); // Extract the argument after "add"
     addTask(taskToAdd);
 }
-  else if (text.trim() === 'add')      //as i did in the hello i just copied and edited them
+  else if (text.trim() === 'add') {      //as i did in the hello i just copied and edited them
     addTask();
+}
+  else if (text.trim() === 'remove') {    //as i did in the hello i just copied and edited them
+      removeTask();
+  }
+  else if (text.startsWith('remove ')) {
+    const index = text.split(' ')[1] // Extract the argument after "remove"
+    removeTask(null,index);
+  }
   else{
     unknownCommand(text);
   }
@@ -76,12 +84,6 @@ function unknownCommand(c){
   console.log('You dont Have any knowledge? just see the instructions by typing: help')
 }
 
-
-/**
- * Says hello
-*
-* @returns {void}
-*/
 function hello(name){
   if (name) {
     console.log(`hello ${name}!`);
@@ -90,22 +92,11 @@ function hello(name){
   }
 }
 
-
-/**
- * Exits the application
-*
-* @returns {void}
-*/
 function quit(){
   console.log('You lost a good guy, bye bye')
   process.exit();
 }
 
-/**
- * Lists all the tasks
-*
-* @returns {void}
-*/
 function listTasks() {     //this function simply if tasks.length is 0 just print no tasks else i used for each as we used today in the weather api solution to increase the index of each task and display it
   if (tasks.length === 0) {
     console.log('No tasks to display.');
@@ -116,22 +107,30 @@ function listTasks() {     //this function simply if tasks.length is 0 just prin
     });
   }
 }
-const tasks = [];
-
-/**
- * Lists all the tasks
-*
-* @returns {void}
-*/
+let tasks = [];
 
 function addTask(task) {                      //similar to the hello fucntion above i just changed the names
   if (task) {
     tasks.push(task);
     console.log(`Task "${task}" has been added.`);
+    listTasks()
   } else {
     console.log('Undefined: Please provide a task to add.');
   }
 }
+
+function removeTask(task,index=-1) {  
+  if(index >= 0 && index < tasks.length){
+    tasks = tasks.filter((t,i)=>i != (parseInt(index) - 1));
+    console.log('Task has been removed. at index: '+index);
+    listTasks()                   //similar to the hello fucntion above i just changed the names
+  } else {
+    tasks.pop(task);
+    console.log('Task has been removed.');
+    listTasks()
+  }
+}
+
 
 // The following line starts the application
 startApp("ali saghir")
