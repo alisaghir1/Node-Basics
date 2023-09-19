@@ -38,8 +38,8 @@ function onDataReceived(text) {
   if (text === 'quit\n' || text === 'exit') {
     quit();
   }
-  else if (text.startsWith('hello')) {
-    const afterHello = text.trim().substring(5); // Extract the argument after "hello "
+  else if (text.startsWith('hello ')) {
+    const afterHello = text.trim().substring(6); // Extract the argument after "hello"
     hello(afterHello);
   }
   else if (text === 'hello\n') { 
