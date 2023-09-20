@@ -100,9 +100,10 @@ function help(){
   console.log('_remove to remove the tasks from the list' )  // this fucntion lists all the commands
   console.log('_remove plus index number of the task to remove a specific task ' ) 
   console.log('_exit/quit to quit the application ' ) 
-  console.log('edit to edit a task you added' )
-  console.log('check to mark a task as done' ) 
-  console.log('uncheck to marke a task as undone' ) 
+  console.log('_edit to edit a task you added' )
+  console.log('_check to mark a task as done' ) 
+  console.log('_uncheck to marke a task as undone' ) 
+  console.log('_list to list the tasks' ) 
 }
 /**
  * prints "unknown command"
