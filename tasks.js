@@ -65,6 +65,17 @@ function onDataReceived(text) {
     const index = text.split(' ')[1] // Extract the argument after "remove"
     removeTask(null,index);
   }
+  else if (text.trim() === 'edit') {    //as i did in the hello i just copied and edited them
+    console.log("no edits to make");
+}
+else if (text.startsWith('edit ')) {
+  const parts = text.split(' ');
+  if (parts.length >= 3) {
+    const index = parseInt(parts[1]) - 1;
+    const newText = parts.slice(2).join(' ');
+    editTask(index, newText);
+  }
+}
   else{
     unknownCommand(text);
   }
@@ -130,7 +141,7 @@ function removeTask(task,index=-1) {
   if(index >= 0 && index < tasks.length){
     tasks = tasks.filter((t,i)=>i != (parseInt(index) - 1));
     console.log('Task has been removed. at index: '+index);
-    listTasks()                   //similar to the hello fucntion above i just changed the names
+    listTasks()                   
   }
   else if(index <= 0 || index > tasks.length){
       console.log("please provide a task to remove");
@@ -139,6 +150,21 @@ function removeTask(task,index=-1) {
     tasks.pop(task);
     console.log('Task has been removed.');
     listTasks()
+  }
+}
+function editTask(index, newText) {
+  if (index === -1) {
+    if (tasks.length === 0) {
+      console.log('No tasks to edit.');
+    } else {
+      tasks[tasks.length - 1] = newText;
+      console.log(`Task ${tasks.length} changed to "${newText}"`);
+    }
+  } else if (index >= 0 && index < tasks.length) {
+    tasks[index] = newText;
+    console.log(`Task ${index + 1} changed to "${newText}"`);
+  } else {
+    console.log('Invalid task index.');
   }
 }
 
