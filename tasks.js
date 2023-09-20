@@ -35,7 +35,7 @@ function startApp(name){
  */
 function onDataReceived(text) {
   
-  if (text === 'quit\n' || text === 'exit') {
+  if (text === 'quit\n' || text === 'exit\n') {
     quit();
   }
   else if (text.startsWith('hello ')) {
@@ -71,7 +71,14 @@ function onDataReceived(text) {
 }
 
 function help(){
-  console.log('these are the commands: \n hello\n hello + your text \n quit\n exit\n help\n')  // this fucntion lists all the commands
+  console.log('These are the commands: ');
+  console.log('_hello to say hello back' ) 
+  console.log('_hello + text to say hello back plus the text') 
+  console.log('_add to add tasks to a list' ) 
+  console.log('_remove to remove the tasks from the list' )  // this fucntion lists all the commands
+  console.log('_remove plus index number of the task to remove a specific task ' ) 
+  console.log('_exit/quit to quit the application ' ) 
+  console.log('_help to list all these commands' ) 
 }
 /**
  * prints "unknown command"
