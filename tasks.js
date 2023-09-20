@@ -131,7 +131,11 @@ function removeTask(task,index=-1) {
     tasks = tasks.filter((t,i)=>i != (parseInt(index) - 1));
     console.log('Task has been removed. at index: '+index);
     listTasks()                   //similar to the hello fucntion above i just changed the names
-  } else {
+  }
+  else if(index <= 0 || index > tasks.length){
+      console.log("please provide a task to remove");
+  }
+   else {
     tasks.pop(task);
     console.log('Task has been removed.');
     listTasks()
