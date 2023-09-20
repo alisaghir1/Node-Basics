@@ -76,6 +76,17 @@ else if (text.startsWith('edit ')) {
     editTask(index, newText);
   }
 }
+else if (text.startsWith('check ')) {
+  const index = parseInt(text.split(' ')[1]);
+  checkTask(index - 1);
+} else if (text.trim() === 'check') {
+  console.log('Usage: check <index>');
+} else if (text.startsWith('uncheck ')) {
+  const index = parseInt(text.split(' ')[1]);
+  uncheckTask(index - 1);
+} else if (text.trim() === 'uncheck') {
+  console.log('Usage: uncheck <index>');
+}
   else{
     unknownCommand(text);
   }
@@ -89,7 +100,9 @@ function help(){
   console.log('_remove to remove the tasks from the list' )  // this fucntion lists all the commands
   console.log('_remove plus index number of the task to remove a specific task ' ) 
   console.log('_exit/quit to quit the application ' ) 
-  console.log('_help to list all these commands' ) 
+  console.log('edit to edit a task you added' )
+  console.log('check to mark a task as done' ) 
+  console.log('uncheck to marke a task as undone' ) 
 }
 /**
  * prints "unknown command"
@@ -121,17 +134,18 @@ function listTasks() {     //this function simply if tasks.length is 0 just prin
   } else {
     console.log('Tasks:');
     tasks.forEach((task, index) => {
-      console.log(`${index + 1}. ${task}`);
+      const status = task.done ? '[✓]' : '[ ]';
+      console.log(`${index + 1}. ${status} ${task.text}`);
     });
   }
 }
 let tasks = [];
 
-function addTask(task) {                      //similar to the hello fucntion above i just changed the names
+function addTask(task, done = false) {
   if (task) {
-    tasks.push(task);
+    tasks.push({ text: task, done });
     console.log(`Task "${task}" has been added.`);
-    listTasks()
+    listTasks();
   } else {
     console.log('Undefined: Please provide a task to add.');
   }
@@ -152,22 +166,36 @@ function removeTask(task,index=-1) {
     listTasks()
   }
 }
-function editTask(index, newText) {
-  if (index === -1) {
-    if (tasks.length === 0) {
-      console.log('No tasks to edit.');
-    } else {
-      tasks[tasks.length - 1] = newText;
-      console.log(`Task ${tasks.length} changed to "${newText}"`);
-    }
-  } else if (index >= 0 && index < tasks.length) {
-    tasks[index] = newText;
+function editTask(index, newText, done) {
+  if (index >= 0 && index < tasks.length) {
+    tasks[index].text = newText;
+    tasks[index].done = done;
     console.log(`Task ${index + 1} changed to "${newText}"`);
+    listTasks();
+  } else {
+    console.log('Invalid task index.');
+  }
+}
+// Implement the "check" and "uncheck" commands
+function checkTask(index) {
+  if (index >= 0 && index < tasks.length) {
+    tasks[index].done = true;
+    console.log(`Task ${index + 1} marked as done.`);
+    listTasks();
   } else {
     console.log('Invalid task index.');
   }
 }
 
+function uncheckTask(index) {
+  if (index >= 0 && index < tasks.length) {
+    tasks[index].done = false;
+    console.log(`Task ${index + 1} marked as not done.`);
+    listTasks();
+  } else {
+    console.log('Invalid task index.');
+  }
+}
 
 // The following line starts the application
 startApp("ali saghir")
