@@ -9,6 +9,7 @@
  * @param  {string} name alisaghir name
  * @returns {void}
  */
+console.log(process.argv);
 function startApp(name){
   process.stdin.resume();
   process.stdin.setEncoding('utf8');
@@ -22,7 +23,7 @@ const fs = require('fs');
 
 function saveTasksToFile() {
   const jsonData = JSON.stringify(tasks, null, 2);
-  const filePath = 'tasks.json';
+  const filePath = process.argv[2];
   fs.writeFile(filePath, jsonData, (err) => {
     if (err) {
       console.error('Error saving tasks:');
@@ -33,7 +34,7 @@ function saveTasksToFile() {
 }
 
 function loadTasksFromFile() {
-  const filePath = 'tasks.json';
+  const filePath = process.argv[2];
 
   fs.readFile(filePath, 'utf8', (err, data) => {
     if (err) {
