@@ -15,7 +15,41 @@ function startApp(name){
   process.stdin.on('data', onDataReceived);
   console.log(`Welcome to ${name}'s coding place!`)
   console.log("--------------------")
+  loadTasksFromFile();
 }
+
+const fs = require('fs');
+
+function saveTasksToFile() {
+  const jsonData = JSON.stringify(tasks, null, 2);
+  const filePath = 'tasks.json';
+  fs.writeFile(filePath, jsonData, (err) => {
+    if (err) {
+      console.error('Error saving tasks:');
+    } else {
+      console.log('Tasks have been saved');
+    }
+  });
+}
+
+function loadTasksFromFile() {
+  const filePath = 'tasks.json';
+
+  fs.readFile(filePath, 'utf8', (err, data) => {
+    if (err) {
+      console.error('Error loading tasks:');
+    } else {
+      try {
+        tasks = JSON.parse(data);
+        console.log('Tasks have been loaded');
+        listTasks();
+      } catch (parseError) {
+        console.error('Error parsing JSON:');
+      }
+    }
+  });
+}
+
 
 
 /**
@@ -147,6 +181,7 @@ function addTask(task, done = false) {
     tasks.push({ text: task, done });
     console.log(`Task "${task}" has been added.`);
     listTasks();
+    saveTasksToFile();
   } else {
     console.log('Undefined: Please provide a task to add.');
   }
@@ -156,7 +191,8 @@ function removeTask(task,index=-1) {
   if(index >= 0 && index < tasks.length){
     tasks = tasks.filter((t,i)=>i != (parseInt(index) - 1));
     console.log('Task has been removed. at index: '+index);
-    listTasks()                   
+    listTasks();
+    saveTasksToFile();                   
   }
   else if(index <= 0 || index > tasks.length){
       console.log("please provide a task to remove");
@@ -173,6 +209,7 @@ function editTask(index, newText, done) {
     tasks[index].done = done;
     console.log(`Task ${index + 1} changed to "${newText}"`);
     listTasks();
+    saveTasksToFile();
   } else {
     console.log('Invalid task index.');
   }
@@ -183,6 +220,7 @@ function checkTask(index) {
     tasks[index].done = true;
     console.log(`Task ${index + 1} marked as done.`);
     listTasks();
+    saveTasksToFile();
   } else {
     console.log('Invalid task index.');
   }
@@ -193,6 +231,7 @@ function uncheckTask(index) {
     tasks[index].done = false;
     console.log(`Task ${index + 1} marked as not done.`);
     listTasks();
+    saveTasksToFile();
   } else {
     console.log('Invalid task index.');
   }
